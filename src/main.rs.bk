@@ -1,0 +1,29 @@
+
+fn prime_seive(max_prime: usize) -> Vec<bool> {
+    let mut is_prime: Vec<bool> = (0..max_prime)
+        .map(|idx| if idx % 2 == 0 { false } else { true })
+        .collect();
+
+    for idx in 1..max_prime {
+        if is_prime[idx] {
+            let mut mult = 2;
+            while mult * idx < max_prime {
+                is_prime[mult * idx] = false;
+                mult += 1;
+            }
+        }
+    }
+
+    is_prime[2] = true;
+
+    (0..max_prime).fold(vec![], |acc, &idx| if is_prime[idx] {acc.push(idx)});
+    is_prime
+}
+
+fn main() {
+
+    let seive = prime_seive(100000);
+
+    println!("{:?}", seive);
+
+}
