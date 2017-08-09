@@ -1,0 +1,23 @@
+<html>
+
+<body>
+    <script>
+        const memory = new WebAssembly.Memory({initial: 1});
+        const importObj = {
+            js: {
+                mem: memory
+            }
+        };
+        console.log(importObj);
+
+        fetch('./lodash.wasm').then(result => result.arrayBuffer()).then(bytes => WebAssembly.instantiate(bytes, importObj)).then(result => result.instance)
+            .then(instance => {
+                const MAX_SEIVE = 1000
+                instance.exports.seive(MAX_SEIVE);
+                const i32View = new Int32Array(memory.buffer);
+                console.log(i32View.slice(1, i32View[0]));
+            })
+    </script>
+</body>
+
+</html>
