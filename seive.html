@@ -10,7 +10,7 @@
         };
         console.log(importObj);
 
-        fetch('./lodash.wasm').then(result => result.arrayBuffer()).then(bytes => WebAssembly.instantiate(bytes, importObj)).then(result => result.instance)
+        fetch('./seive.wasm').then(result => result.arrayBuffer()).then(bytes => WebAssembly.instantiate(bytes, importObj)).then(result => result.instance)
             .then(instance => {
                 const MAX_SEIVE = 1000
                 instance.exports.seive(MAX_SEIVE);
